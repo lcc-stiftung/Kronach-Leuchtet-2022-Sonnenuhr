@@ -166,3 +166,17 @@ void LedStripe::sandDrop( uint8_t index, uint8_t delayMs, LedColor color, uint8_
     delay( delayMs );
 
 }
+
+void LedStripe::updateLast( LedColor color, uint8_t brightness){
+
+    setColor( color, brightness );
+    m_stripe.fill( m_color, 0, 240 );
+    m_stripe.show();
+
+    if( brightness == 0 ){
+        m_stripe.clear();
+    }
+
+    delay(100);
+
+}

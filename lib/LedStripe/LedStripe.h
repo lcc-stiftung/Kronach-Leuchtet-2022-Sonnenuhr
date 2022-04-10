@@ -20,6 +20,8 @@ class LedStripe{
         void update( LedColor color, uint8_t brightness );
         void setColor( LedColor color, uint8_t brightness );
 
+        void updateLast( LedColor color, uint8_t brightness );
+
     private:
 
         Adafruit_NeoPixel m_stripe;

@@ -17,6 +17,10 @@ uint8_t hour = 0;
 uint8_t hourLast = 0;
 bool hourChange;
 
+// Set LED Stripe Color and Brightness
+uint8_t brightness = 100;
+uint8_t brightnessLast = brightness;
+
 // Create LED Stripes Objects
 
 LedStripe Stripe1( Adafruit_NeoPixel(240, 7, NEO_GRB), clockRtc );
@@ -108,7 +112,7 @@ void setup() {
     hourChange = false;
 
     LedStripe& ledStripe = getLedStripe( hour );
-    ledStripe.init( red, 100 );
+    ledStripe.init( red, brightness );
 
 
 }
@@ -122,7 +126,24 @@ void loop() {
     hour = clockRtc.getHour( h12Flag, pmFlag );
 
     LedStripe& ledStripe = getLedStripe( hour );
-    ledStripe.update( red, 100 );
+    ledStripe.update( red, brightness );
+
+    if( hourLast != hour - 1 ){
+        hourLast++;
+        hourChange = true;
+    }
+
+    if( hourChange == true ){
+
+        brightnessLast--;
+
+        LedStripe& ledStripe = getLedStripe( hourLast );
+        ledStripe.updateLast( red, brightnessLast );
+
+        if( brightnessLast == 0 ){
+            hourChange = false;
+        }
+    }
 
     ///timeDebug();
 }
